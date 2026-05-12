@@ -13,7 +13,7 @@ body {
 }
 
 .app {
-  max-width: 900px;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 16px;
   min-height: 100vh;
@@ -273,16 +273,18 @@ body {
 .question-image {
   text-align: center;
   margin-bottom: 20px;
-  background: #f9fafb;
+  background: #f0f4f8;
   border-radius: 12px;
-  padding: 12px;
+  padding: 16px;
+  border: 1px solid #e5e7eb;
 }
 
 .question-image img {
   max-width: 100%;
-  max-height: 300px;
+  max-height: 500px;
   border-radius: 8px;
   object-fit: contain;
+  image-rendering: auto;
 }
 
 .image-label {
@@ -513,7 +515,7 @@ body {
 
 /* RESULTS */
 .results-container {
-  max-width: 600px;
+  max-width: 700px;
   margin: 0 auto;
 }
 
