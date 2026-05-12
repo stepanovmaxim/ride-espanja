@@ -40,7 +40,7 @@ export default function QuestionCard({
       {question.img && !imgError && (
         <div className="question-image">
           <img
-            src={`/images/${question.img}`}
+            src={`${import.meta.env.BASE_URL}images/${question.img}`}
             alt="Иллюстрация к вопросу"
             onError={() => setImgError(true)}
           />

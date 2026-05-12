@@ -25,7 +25,7 @@ export default function Exam() {
   const [reviewIndex, setReviewIndex] = useState(0);
 
   useEffect(() => {
-    fetch('/data/questions_ru.json')
+    fetch(`${import.meta.env.BASE_URL}data/questions_ru.json`)
       .then((r) => r.json())
       .then((data: Question[]) => {
         const selected = pickRandom(data, EXAM_SIZE);

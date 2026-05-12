@@ -9,7 +9,7 @@ export default function Home() {
 
   useEffect(() => {
     setProgress(loadProgress());
-    fetch('/data/questions_ru.json')
+    fetch(`${import.meta.env.BASE_URL}data/questions_ru.json`)
       .then((r) => r.json())
       .then((d) => setQuestionCount(d.length))
       .catch(() => setQuestionCount(0));

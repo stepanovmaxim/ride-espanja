@@ -15,7 +15,7 @@ export default function Practice() {
   const [count, setCount] = useState(10);
 
   useEffect(() => {
-    fetch('/data/questions_ru.json')
+    fetch(`${import.meta.env.BASE_URL}data/questions_ru.json`)
       .then((r) => r.json())
       .then((data: Question[]) => {
         setAllQuestions(data);
