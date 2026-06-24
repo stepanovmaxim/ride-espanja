@@ -11,12 +11,15 @@ export function calculateResults(
   const results = questions.map((q, i) => {
     const selected = answers[i];
     const isCorrect = selected !== null && checkAnswer(q, selected);
-    return { question: q, selected, isCorrect };
+    // Unanswered questions count as incorrect
+    const isWrong = selected === null || !isCorrect;
+    return { question: q, selected, isCorrect, isWrong };
   });
 
   const correct = results.filter((r) => r.isCorrect).length;
-  const incorrect = results.filter((r) => r.selected !== null && !r.isCorrect).length;
-  const passed = incorrect <= 3;
+  const incorrect = results.filter((r) => r.selected === null || (r.selected !== null && !r.isCorrect)).length;
+  const allAnswered = results.every((r) => r.selected !== null);
+  const passed = incorrect <= 3 && allAnswered;
 
   return {
     total: questions.length,
