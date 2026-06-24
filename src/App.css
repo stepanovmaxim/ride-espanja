@@ -314,6 +314,13 @@ body {
   margin-top: 6px;
 }
 
+.image-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+}
+
 .question-text {
   font-size: 17px;
   font-weight: 600;

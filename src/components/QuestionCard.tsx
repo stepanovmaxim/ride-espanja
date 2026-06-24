@@ -43,9 +43,11 @@ export default function QuestionCard({
         <span className="question-number">
           {lang === 'es' ? 'Pregunta' : 'Вопрос'} {questionNumber} {lang === 'es' ? 'de' : 'из'} {totalQuestions}
         </span>
-        <button className="lang-toggle" onClick={onToggleLang} title={lang === 'ru' ? 'Ver en español' : 'Смотреть на русском'}>
-          {lang === 'ru' ? 'ES' : 'RU'}
-        </button>
+        {!question.img || imgError ? (
+          <button className="lang-toggle" onClick={onToggleLang} title={lang === 'ru' ? 'Ver en español' : 'Смотреть на русском'}>
+            {lang === 'ru' ? 'ES' : 'RU'}
+          </button>
+        ) : null}
       </div>
 
       {question.img && !imgError && (
@@ -55,7 +57,12 @@ export default function QuestionCard({
             alt="Иллюстрация к вопросу"
             onError={() => setImgError(true)}
           />
-          <span className="image-label">{lang === 'es' ? `Imagen ${questionNumber}` : `Изображение ${questionNumber}`}</span>
+          <div className="image-bottom">
+            <span className="image-label">{lang === 'es' ? `Imagen ${questionNumber}` : `Изображение ${questionNumber}`}</span>
+            <button className="lang-toggle" onClick={onToggleLang} title={lang === 'ru' ? 'Ver en español' : 'Смотреть на русском'}>
+              {lang === 'ru' ? 'ES' : 'RU'}
+            </button>
+          </div>
         </div>
       )}
 
