@@ -64,13 +64,6 @@ export default function Exam() {
     newAnswers[currentIndex] = answerIndex;
     setAnswers(newAnswers);
     setJustAnswered(true);
-    // Auto-advance after showing correct answer
-    setTimeout(() => {
-      setJustAnswered(false);
-      if (currentIndex < EXAM_SIZE - 1) {
-        setCurrentIndex((i) => i + 1);
-      }
-    }, 1200);
   };
 
   const errors = answers.filter(
