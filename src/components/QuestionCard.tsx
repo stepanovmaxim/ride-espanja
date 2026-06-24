@@ -8,6 +8,8 @@ interface Props {
   showResult?: boolean;
   questionNumber: number;
   totalQuestions: number;
+  lang: 'ru' | 'es';
+  onToggleLang: () => void;
 }
 
 export default function QuestionCard({
@@ -17,6 +19,8 @@ export default function QuestionCard({
   showResult = false,
   questionNumber,
   totalQuestions,
+  lang,
+  onToggleLang,
 }: Props) {
   const [imgError, setImgError] = useState(false);
 
@@ -29,12 +33,19 @@ export default function QuestionCard({
     return '';
   };
 
+  const qText = lang === 'es' && question.question_es ? question.question_es : question.question;
+  const aTexts = lang === 'es' && question.answers_es ? question.answers_es : question.answers;
+  const explText = lang === 'es' && question.explanation_es ? question.explanation_es : question.explanation;
+
   return (
     <div className="question-card">
       <div className="question-header">
         <span className="question-number">
-          Вопрос {questionNumber} из {totalQuestions}
+          {lang === 'es' ? 'Pregunta' : 'Вопрос'} {questionNumber} {lang === 'es' ? 'de' : 'из'} {totalQuestions}
         </span>
+        <button className="lang-toggle" onClick={onToggleLang} title={lang === 'ru' ? 'Ver en español' : 'Смотреть на русском'}>
+          {lang === 'ru' ? 'ES' : 'RU'}
+        </button>
       </div>
 
       {question.img && !imgError && (
@@ -44,14 +55,14 @@ export default function QuestionCard({
             alt="Иллюстрация к вопросу"
             onError={() => setImgError(true)}
           />
-          <span className="image-label">Изображение {questionNumber}</span>
+          <span className="image-label">{lang === 'es' ? `Imagen ${questionNumber}` : `Изображение ${questionNumber}`}</span>
         </div>
       )}
 
-      <h3 className="question-text">{question.question}</h3>
+      <h3 className="question-text">{qText}</h3>
 
       <div className="answers-list">
-        {question.answers.map((answer, index) => (
+        {aTexts.map((answer, index) => (
           <button
             key={index}
             className={`answer-btn ${getAnswerClass(index)}`}
@@ -74,9 +85,9 @@ export default function QuestionCard({
         ))}
       </div>
 
-      {showResult && question.explanation && (
+      {showResult && explText && (
         <div className="explanation">
-          <strong>Пояснение:</strong> {question.explanation}
+          <strong>{lang === 'es' ? 'Explicación:' : 'Пояснение:'}</strong> {explText}
         </div>
       )}
     </div>

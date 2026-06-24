@@ -5,6 +5,9 @@ export interface Question {
   answers: string[];
   explanation: string;
   correct: number[];
+  question_es?: string;
+  answers_es?: string[];
+  explanation_es?: string;
 }
 
 export type ExamMode = 'exam' | 'practice';

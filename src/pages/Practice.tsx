@@ -13,6 +13,7 @@ export default function Practice() {
   const [showResult, setShowResult] = useState(false);
   const [score, setScore] = useState({ correct: 0, total: 0 });
   const [count, setCount] = useState(10);
+  const [lang, setLang] = useState<'ru' | 'es'>('ru');
 
   useEffect(() => {
     fetch(`${import.meta.env.BASE_URL}data/questions_ru.json`)
@@ -97,6 +98,8 @@ export default function Practice() {
         showResult={showResult}
         questionNumber={currentIndex + 1}
         totalQuestions={questions.length}
+        lang={lang}
+        onToggleLang={() => setLang(l => l === 'ru' ? 'es' : 'ru')}
       />
 
       <div className="practice-footer">

@@ -23,6 +23,7 @@ export default function Exam() {
   const [timeLeft, setTimeLeft] = useState(EXAM_TIME);
   const [result, setResult] = useState<ExamResult | null>(null);
   const [reviewIndex, setReviewIndex] = useState(0);
+  const [lang, setLang] = useState<'ru' | 'es'>('ru');
 
   useEffect(() => {
     fetch(`${import.meta.env.BASE_URL}data/questions_ru.json`)
@@ -123,6 +124,8 @@ export default function Exam() {
           showResult
           questionNumber={reviewIndex + 1}
           totalQuestions={questions.length}
+          lang={lang}
+          onToggleLang={() => setLang(l => l === 'ru' ? 'es' : 'ru')}
         />
         <div className="review-pagination">
           <button
@@ -185,6 +188,8 @@ export default function Exam() {
           onSelect={handleSelect}
           questionNumber={currentIndex + 1}
           totalQuestions={EXAM_SIZE}
+          lang={lang}
+          onToggleLang={() => setLang(l => l === 'ru' ? 'es' : 'ru')}
         />
       )}
 
