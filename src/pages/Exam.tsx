@@ -24,6 +24,7 @@ export default function Exam() {
   const [result, setResult] = useState<ExamResult | null>(null);
   const [reviewIndex, setReviewIndex] = useState(0);
   const [lang, setLang] = useState<'ru' | 'es'>('ru');
+  const [justAnswered, setJustAnswered] = useState(false);
 
   useEffect(() => {
     fetch(`${import.meta.env.BASE_URL}data/questions_ru.json`)
@@ -62,6 +63,14 @@ export default function Exam() {
     const newAnswers = [...answers];
     newAnswers[currentIndex] = answerIndex;
     setAnswers(newAnswers);
+    setJustAnswered(true);
+    // Auto-advance after showing correct answer
+    setTimeout(() => {
+      setJustAnswered(false);
+      if (currentIndex < EXAM_SIZE - 1) {
+        setCurrentIndex((i) => i + 1);
+      }
+    }, 1200);
   };
 
   const errors = answers.filter(
@@ -181,7 +190,7 @@ export default function Exam() {
               className={`q-nav-btn ${answers[i] !== null ? 'answered' : ''} ${
                 i === currentIndex ? 'active' : ''
               }`}
-              onClick={() => setCurrentIndex(i)}
+              onClick={() => { setCurrentIndex(i); setJustAnswered(false); }}
             >
               {i + 1}
             </button>
@@ -194,6 +203,7 @@ export default function Exam() {
           question={currentQuestion}
           selected={answers[currentIndex]}
           onSelect={handleSelect}
+          showResult={justAnswered}
           questionNumber={currentIndex + 1}
           totalQuestions={EXAM_SIZE}
           lang={lang}
@@ -205,7 +215,7 @@ export default function Exam() {
         <button
           className="btn btn-secondary"
           disabled={currentIndex === 0}
-          onClick={() => setCurrentIndex((i) => i - 1)}
+          onClick={() => { setCurrentIndex((i) => i - 1); setJustAnswered(false); }}
         >
           Назад
         </button>
@@ -215,7 +225,7 @@ export default function Exam() {
         {currentIndex < EXAM_SIZE - 1 ? (
           <button
             className="btn btn-primary"
-            onClick={() => setCurrentIndex((i) => i + 1)}
+            onClick={() => { setCurrentIndex((i) => i + 1); setJustAnswered(false); }}
           >
             Далее
           </button>
