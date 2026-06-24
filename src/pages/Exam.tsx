@@ -71,12 +71,14 @@ export default function Exam() {
   ).length;
   const answered = answers.filter((a) => a !== null).length;
 
-  // Auto-fail at 3 errors
-  useEffect(() => {
-    if (errors >= 3 && phase === 'exam') {
+  const goNext = () => {
+    if (errors >= 3 || (currentIndex === EXAM_SIZE - 1 && answered === EXAM_SIZE)) {
       finishExam();
+      return;
     }
-  }, [errors, phase, finishExam]);
+    setCurrentIndex((i) => i + 1);
+    setJustAnswered(false);
+  };
 
   const formatTime = (s: number) => {
     const m = Math.floor(s / 60);
@@ -218,14 +220,14 @@ export default function Exam() {
         {currentIndex < EXAM_SIZE - 1 ? (
           <button
             className="btn btn-primary"
-            onClick={() => { setCurrentIndex((i) => i + 1); setJustAnswered(false); }}
+            onClick={goNext}
           >
             Далее
           </button>
         ) : (
           <button
             className="btn btn-success"
-            onClick={finishExam}
+            onClick={goNext}
             disabled={answered < EXAM_SIZE}
           >
             {answered < EXAM_SIZE
