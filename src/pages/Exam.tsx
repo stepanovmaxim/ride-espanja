@@ -58,6 +58,7 @@ export default function Exam() {
   }, [questions, answers]);
 
   const handleSelect = (answerIndex: number) => {
+    if (answers[currentIndex] !== null) return;
     const newAnswers = [...answers];
     newAnswers[currentIndex] = answerIndex;
     setAnswers(newAnswers);
@@ -67,6 +68,13 @@ export default function Exam() {
     (a, i) => a !== null && questions[i]?.correct[a] === 0
   ).length;
   const answered = answers.filter((a) => a !== null).length;
+
+  // Auto-fail at 3 errors
+  useEffect(() => {
+    if (errors >= 3 && phase === 'exam') {
+      finishExam();
+    }
+  }, [errors, phase, finishExam]);
 
   const formatTime = (s: number) => {
     const m = Math.floor(s / 60);
